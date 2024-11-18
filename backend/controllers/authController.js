@@ -43,7 +43,7 @@ export const login = async (req, res) => {
     });
     if (!user) {
       return res.status(404).json({
-        message: `User with email ${identifier || "'Email does not exist'"} does not exist in the database.`,
+        message: `User with identifier "${identifier}" does not exist in the database.`,
       });
     } else {
       const isMatch = await bcrypt.compare(password, user.password);
@@ -54,7 +54,7 @@ export const login = async (req, res) => {
         //change this prolly longer
         expiresIn: "8h",
       });
-      response.status(200).json({ token });
+      res.status(200).json({ token });
     }
   } catch (error) {
     //add more error handling here like if a user already exists in database

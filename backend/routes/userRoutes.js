@@ -16,3 +16,5 @@ router.get("/freelancer", (req, res) => {
 router.get("/user", (req, res) => {
   res.send("Welcome Everyone");
 });
+
+export default router;
