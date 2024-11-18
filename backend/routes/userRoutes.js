@@ -1,14 +1,14 @@
 import express from "express";
-
+import verifyToken from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
 //Client
-router.get("/client", (req, res) => {
+router.get("/client", verifyToken, (req, res) => {
   res.send("Welcome Client");
 });
 
 //Freelancer
-router.get("/freelancer", (req, res) => {
+router.get("/freelancer", verifyToken, (req, res) => {
   res.send("Welcome Freelancer");
 });
 

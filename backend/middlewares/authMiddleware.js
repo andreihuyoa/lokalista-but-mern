@@ -1,17 +1,26 @@
 import jwt from "jsonwebtoken";
 
-exports.verifyToken = (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) return res.status(401).json({ message: "Unauthorized" });
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) return res.status(403).json({ message: "Invalid token" });
-    req.user = decoded;
-    next();
-  });
+//In postman try checking for the token using POST
+const verifyToken = (req, res, next) => {
+  let token; //gets token from logging in user
+  let authHeader = req.headers.Authorization || req.headers.authorization;
+  if (authHeader && authHeader.startsWith("Bearer")) {
+    token = authHeader.split(" ")[1];
+    if (!token) {
+      return res.status(401).json({ message: "No token, auth denied." });
+    }
+    //if its valid then the token we get needs to be decoded
+    try {
+      const decode = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = decode;
+      console.log("The decoded user is:", req.user);
+      next(); //forwards the request
+    } catch (error) {
+      res.status(400).json({ message: "Token is not valid." });
+    }
+  } else {
+    return res.status(401).json({ message: "Authorization token not passed, access denied." });
+  }
 };
 
-exports.checkRole = (role) => (req, res, next) => {
-  if (req.user.role !== role) return res.status(403).json({ message: "Access denied" });
-  next();
-};
+export default verifyToken;
