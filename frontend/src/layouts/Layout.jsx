@@ -1,4 +1,4 @@
-import { ThemeProvider } from "./ThemeProvider";
+import { ThemeProvider } from "../components/ThemeProvider";
 
 export const Layout = ({ children }) => {
   return (
