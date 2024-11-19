@@ -1,6 +1,6 @@
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 
-import { Layout } from "./components/Layout.jsx";
+import { Layout } from "./layouts/Layout.jsx";
 import LoginPage from "./pages/auth/LoginPage.jsx";
 import RegisterPage from "./pages/auth/RegisterPage.jsx";
 import LandingPage from "./pages/LandingPage.jsx";

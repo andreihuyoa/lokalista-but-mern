@@ -1,10 +1,10 @@
-import { Layout } from "../components/Layout.jsx";
+import { Layout } from "../layouts/Layout.jsx";
 import React from "react";
 
 const LandingPage = () => {
   return (
     <Layout>
-      <div>Wow!</div>
+      <div className=""></div>
     </Layout>
   );
 };
