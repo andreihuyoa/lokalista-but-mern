@@ -51,6 +51,12 @@ export default {
           5: "hsl(var(--chart-5))",
         },
       },
+      fontFamily: {
+        TanPearl: ["TanPearl", "sans-serif"],
+        SFPro: ["SFPro", "sans-serif"],
+        SFProRounded: ["SFProRounded", "sans-serif"],
+        SFProDisplay: ["SFProDisplay", "sans-serif"],
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
