@@ -56,7 +56,7 @@ export default {
           "8rem",
           {
             lineHeight: "1",
-            // letterSpacing: "normal",
+            // letterSpacing: "normal", add arbitrary values for small headings ?buttons? like this tracking-[0.030em]
             // fontWeight: "normal",
           },
         ],
