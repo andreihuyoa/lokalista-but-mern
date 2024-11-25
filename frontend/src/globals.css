@@ -108,13 +108,15 @@ add sa root
 --font-primary: "TanPearl", serif,
 
 */
+
+/* Variable Fonts = changes weight */
+
+/* Static Fonts = does not change weight */
 @font-face {
   font-family: "TanPearl";
   src:
     local("Tan-Pearl"),
     url("./assets/fonts/tan-pearl.otf") format("opentype");
-  font-style: normal;
-  font-weight: normal;
 }
 
 @font-face {
@@ -122,8 +124,6 @@ add sa root
   src:
     local("SFPro"),
     url("./assets/fonts/SanFrancisco/SFPro.ttf") format("truetype");
-  font-style: normal;
-  font-weight: normal;
 }
 
 @font-face {
@@ -131,8 +131,6 @@ add sa root
   src:
     local("SFProRounded"),
     url("./assets/fonts/SanFrancisco/SFPro-Rounded.otf") format("opentype");
-  font-style: normal;
-  font-weight: normal;
 }
 
 @font-face {
@@ -140,8 +138,6 @@ add sa root
   src:
     local("SFProDisplay"),
     url("./assets/fonts/SanFrancisco/SFPro-Display.otf") format("opentype");
-  font-style: normal;
-  font-weight: normal;
 }
 
 @font-face {
@@ -149,6 +145,4 @@ add sa root
   src:
     local("ObjectSans"),
     url("./assets/fonts/object-sans.ttf") format("truetype");
-  font-style: normal;
-  font-weight: normal;
 }
