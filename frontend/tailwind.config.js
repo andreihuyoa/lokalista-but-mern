@@ -51,11 +51,30 @@ export default {
           5: "hsl(var(--chart-5))",
         },
       },
+      fontSize: {
+        lh1: [
+          "8rem",
+          {
+            lineHeight: "1",
+            // letterSpacing: "normal",
+            // fontWeight: "normal",
+          },
+        ],
+        lh2: [
+          "4rem",
+          {
+            lineHeight: "1",
+            // letterSpacing: "normal",
+            // fontWeight: "normal",
+          },
+        ],
+      },
       fontFamily: {
         TanPearl: ["TanPearl", "sans-serif"],
         SFPro: ["SFPro", "sans-serif"],
         SFProRounded: ["SFProRounded", "sans-serif"],
         SFProDisplay: ["SFProDisplay", "sans-serif"],
+        ObjectSans: ["ObjectSans", "sans-serif"],
       },
     },
   },

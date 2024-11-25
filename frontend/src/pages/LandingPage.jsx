@@ -4,11 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import ModeToggle from "@/components/ModeToggle";
 
+import clairo from "../assets/clairocotrill.jpg"; //replace with the actual image
+
 const LandingPage = () => {
   return (
-    <div className="flex flex-col gap-12">
+    <div className="flex flex-col items-center gap-12">
       {/* TOP */}
-      <div className="flex justify-end">
+      <div className="flex justify-end w-full">
         <Button
           variant="link"
           asChild
@@ -19,7 +21,7 @@ const LandingPage = () => {
       </div>
       {/* Lokalista Heading */}
       <div className="flex flex-col items-center gap-16 mt-16">
-        <h1 className="flex justify-center font-TanPearl text-9xl text-black dark:text-white">
+        <h1 className="flex justify-center font-TanPearl text-lh1 text-black dark:text-white">
           Lokal<span className="text-primary dark:text-primary">i</span>sta
         </h1>
 
@@ -29,15 +31,15 @@ const LandingPage = () => {
         </Button>
       </div>
       {/* Middle */}
-      <div className="flex flex-row items-center">
+      <div className="flex flex-row items-center gap-32">
         {/* Image */}
-        <div className="w-24 h-24">
-          <img src="" alt="" />
+        <div className="w-72 h-72">
+          <img src={clairo} alt="its me clairo!" />
         </div>
-        <div className="flex flex-col items-center">
-          <h2 className="">Manage and Work</h2>
-          <p>
-            all in <span className="">one</span>platform
+        <div className="flex flex-col items-center font-ObjectSans ">
+          <h2 className="font-extrabold">Manage and Work</h2>
+          <p className="font-light">
+            all in <span className="">one</span> platform
           </p>
         </div>
       </div>
