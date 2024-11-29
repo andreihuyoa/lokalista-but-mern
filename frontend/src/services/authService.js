@@ -1,21 +1,19 @@
-const API_URL = import.meta.env.VITE_API_URL; //gets url from the .env
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000"; //gets url from the .env
+
+console.log("API_URL", API_URL);
 
 //Register user here instead inline sa frontend
 export const handleRegistration = async (userData) => {
-  try {
-    const response = await fetch(`${API_URL}/auth/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    });
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Registration failed");
-    }
-    return await response.json();
-  } catch (error) {
-    throw error.message || "Something went wrong";
+  const response = await fetch(`${API_URL}/api/auth/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Http error! status: ${response.status}`);
   }
+  return await response.json();
 };

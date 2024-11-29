@@ -30,6 +30,7 @@ const formSchema = z
       .string()
       .min(4, { message: "Username must be at least 4 characters long" })
       .max(25)
+      .nullable()
       .optional(),
     password: z
       .string()
@@ -67,14 +68,16 @@ const RegisterPage = () => {
     try {
       const userData = { ...values, role };
 
-      if(!userData.username) delete userData.username; //deletes "" if left empty by user
+      if(!userData.username || userData.username.trim() === "") {
+        delete userData.username;
+      }
 
       const response = await handleRegistration(userData);
       setSuccessMessage("Registration successful!");
       form.reset(); //resets the form, but ideally it should login the user and redirect sa dashboard, or to make them login instead of redirecting
       console.log("Form Submitted:", values);
     } catch (error) {
-      setErrorMessage(errorMessage);
+      setErrorMessage(error.message);
       console.error("Form error:", error);
     }
   };
@@ -204,7 +207,7 @@ const RegisterPage = () => {
                       name="username"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Username</FormLabel>
+                          <FormLabel>Username (Optional)</FormLabel>
                           <FormControl>
                             <Input placeholder="Enter your username" type="text" {...field} />
                           </FormControl>
