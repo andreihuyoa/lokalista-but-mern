@@ -49,6 +49,14 @@ const RegisterPage = () => {
 
   const form = useForm({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      first_name: "",
+      last_name: "",
+      email: "",
+      username: "",
+      password: "",
+      confirm_password: "",
+    },
   });
 
   const handleRoleSelection = (selectedRole) => {
@@ -58,6 +66,9 @@ const RegisterPage = () => {
   const handleSubmit = async (values) => {
     try {
       const userData = { ...values, role };
+
+      if(!userData.username) delete userData.username; //deletes "" if left empty by user
+
       const response = await handleRegistration(userData);
       setSuccessMessage("Registration successful!");
       form.reset(); //resets the form, but ideally it should login the user and redirect sa dashboard, or to make them login instead of redirecting
