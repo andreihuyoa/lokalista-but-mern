@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000"; //gets url from the .env
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000"; //gets backend url from frontend/.env
 
 console.log("API_URL", API_URL);
 
