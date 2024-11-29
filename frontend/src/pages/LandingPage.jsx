@@ -15,7 +15,7 @@ const LandingPage = () => {
       <div className="min-h-screen min-w-full items-center gap-12 px-10 py-5">
         {/* SVG accent */}
         <div
-          className="absolute inset-0 w-full h-full  object-cover pointer-events-none z-0"
+          className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
           style={{
             background: `url(${bgaccent}) no-repeat center/cover`,
             maskImage: "linear-gradient(to bottom, black 40% transparent 100%",
@@ -24,15 +24,15 @@ const LandingPage = () => {
         />
 
         {/* Main Content */}
-        <div className="relative z-10 flex flex-col items-center w-full">
+        <div className="relative z-10 flex w-full flex-col items-center">
           {/* Top */}
-          <div className="flex justify-between w-full items-center">
+          <div className="flex w-full items-center justify-between">
             <ModeToggle className="px-6" />
 
             <Button
               variant="link"
               asChild
-              className="font-SFProRounded dark:text-slate-200 text-primary"
+              className="font-SFProRounded text-primary dark:text-slate-200"
             >
               <Link to="/login">Already have an account?</Link>
             </Button>
@@ -40,7 +40,7 @@ const LandingPage = () => {
 
           {/* Lokalista Heading */}
 
-          <h1 className="flex justify-center font-TanPearl text-lh1 text-black dark:text-slate-200 my-16">
+          <h1 className="font-TanPearl text-lh1 my-16 flex justify-center text-black dark:text-slate-200">
             Lokal<span className="text-primary dark:text-primary">i</span>sta
           </h1>
 
@@ -50,11 +50,13 @@ const LandingPage = () => {
             <div className="w-full md:w-auto">
               <img src={computerguy} alt="its me clairo!" />
             </div>
-            {/* Texts */}
-            <div className="flex flex-row items-center font-SFProDisplay tracking-[0.030em] text-black dark:text-white gap-6">
-              <h2 className="font-extrabold text-5xl">Start</h2>
+            {/* Texts
+             update the letter spacing
+            */}
+            <div className="font-SFProDisplay flex flex-row items-center gap-6 tracking-[0.030em] text-black dark:text-white">
+              <h2 className="text-5xl font-extrabold">Start</h2>
               <div className="flex flex-col">
-                <p className="font-thin text-3xl">
+                <p className="text-3xl font-thin">
                   managing
                   <span className="text-primary">,</span>
                 </p>

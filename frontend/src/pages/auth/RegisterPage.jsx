@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-import { useForm } from "react-hook-form";
+import { handleRegistration } from "@/services/authService";
 
-import ModeToggle from "@/components/ModeToggle";
+import { useForm } from "react-hook-form";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
@@ -21,17 +21,32 @@ import { Input } from "@/components/ui/input";
 import { ArrowRight } from "lucide-react";
 import computerguy from "../../assets/images/computerguy.svg";
 
-const formSchema = z.object({
-  first_name: z.string().max(20),
-  last_name: z.string().max(20),
-  email: z.string(),
-  username: z.string().min(4).max(25).optional(),
-  password: z.string().min(8).max(200),
-  confirm_password: z.string(), // make a logic that matches the pwd
-});
+const formSchema = z
+  .object({
+    first_name: z.string().min(2, { message: "First name is required" }).max(20),
+    last_name: z.string().min(2, { message: "Last name is required" }).max(20),
+    email: z.string().email({ message: "Invalid email address" }),
+    username: z
+      .string()
+      .min(4, { message: "Username must be at least 4 characters long" })
+      .max(25)
+      .optional(),
+    password: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters long" })
+      .max(200),
+    confirm_password: z.string(),
+  })
+  .refine((data) => data.password === data.confirm_password, {
+    message: "Passwords don't match",
+    path: ["confirm_password"],
+  });
 
 const RegisterPage = () => {
   const [role, setRole] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
   const form = useForm({
     resolver: zodResolver(formSchema),
   });
@@ -40,10 +55,15 @@ const RegisterPage = () => {
     setRole(selectedRole);
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values) => {
     try {
+      const userData = { ...values, role };
+      const response = await handleRegistration(userData);
+      setSuccessMessage("Registration successful!");
+      form.reset(); //resets the form, but ideally it should login the user and redirect sa dashboard, or to make them login instead of redirecting
       console.log("Form Submitted:", values);
     } catch (error) {
+      setErrorMessage(errorMessage);
       console.error("Form error:", error);
     }
   };
@@ -59,15 +79,17 @@ const RegisterPage = () => {
 
         {/* Form */}
         <Card className="w-1/3">
-          <CardHeader className="font-TanPearl text-5xl text-center">
+          <CardHeader className="font-TanPearl text-center text-5xl">
             <CardTitle>Signup</CardTitle>
           </CardHeader>
 
           <CardContent className="pb-0">
+            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+            {successMessage && <p className="text-red-500">{successMessage}</p>}
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(handleSubmit)}
-                className="space-y-8 max-w-3xl mx-auto py-2"
+                className="mx-auto max-w-3xl space-y-8 py-2"
               >
                 <div className="grid grid-cols-12 gap-4">
                   <div className="col-span-6">
@@ -112,16 +134,16 @@ const RegisterPage = () => {
                       type="button"
                       variant={role === "client" ? "default" : "outline"}
                       onClick={() => handleRoleSelection("client")}
-                      className="w-full py-10 justify-between"
+                      className="w-full cursor-pointer justify-between py-10"
                     >
                       <div className="flex flex-row">
                         <div className="flex flex-col">
                           <h3 className="font-ObjectSans tracking-wider">Client</h3>
-                          <p className="text-xs font-SFProDisplay">start managing a team.</p>
+                          <p className="font-SFProDisplay text-xs">start managing a team.</p>
                         </div>
 
                         {/* Icon */}
-                        <ArrowRight className="w-16 h-16 items-center justify-center" />
+                        <ArrowRight className="h-16 w-16 items-center justify-center" />
                       </div>
                     </Button>
                   </div>
@@ -133,16 +155,16 @@ const RegisterPage = () => {
                       type="button"
                       variant={role === "freelance" ? "default" : "outline"}
                       onClick={() => handleRoleSelection("freelance")}
-                      className="w-full py-10 justify-between"
+                      className="w-full cursor-pointer justify-between py-10"
                     >
                       <div className="flex flex-row">
                         <div className="flex flex-col">
                           <h3 className="font-ObjectSans tracking-wider">Freelance</h3>
-                          <p className="text-xs font-SFProDisplay">start looking for a team.</p>
+                          <p className="font-SFProDisplay text-xs">start looking for a team.</p>
                         </div>
 
                         {/* Icon */}
-                        <ArrowRight className="w-16 h-16 items-center justify-center" />
+                        <ArrowRight className="h-16 w-16 items-center justify-center" />
                       </div>
                     </Button>
                   </div>

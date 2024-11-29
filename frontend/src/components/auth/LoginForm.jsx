@@ -22,6 +22,7 @@ const LoginForm = () => {
   //rewrite this piece of trash
   const onSubmit = async (data) => {
     try {
+      //the port here is wrong this should be the port of the backend server and is not typed but
       const response = await fetch("http://localhost:7002/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
