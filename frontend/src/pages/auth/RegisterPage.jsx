@@ -261,11 +261,13 @@ const RegisterPage = () => {
                   </div>
                 </div>
                 {/* Submit */}
-                <CardFooter className="flex flex-col">
-                  <Button type="submit" className="w-full py-0">
+                <CardFooter className="flex flex-col items-end px-0">
+                  <Button type="submit" className="w-2/4 py-0">
                     Register
                   </Button>
-                  <Button variant="link">Already have an account?</Button>
+                  <Button variant="link" className="text-xs">
+                    Already have an account?
+                  </Button>
                 </CardFooter>
               </form>
             </Form>
