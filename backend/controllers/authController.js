@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 import User from "../models/User.js";
 
-//handles user regs, login, auth, add first_name last_name email
+//handles user regs, login, auth
 
 export const register = async (req, res) => {
   try {
@@ -30,8 +30,9 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { identifier, password } = req.body;
+    //Find user by email or username
     const user = await User.findOne({
-      // or is a mongodb command
+      //or is a mongodb command
       $or: [
         {
           email: identifier,
@@ -43,22 +44,26 @@ export const login = async (req, res) => {
     });
     if (!user) {
       return res.status(404).json({
-        message: `User with identifier "${identifier}" does not exist in the database.`,
+        message: `No user found with email or username "${identifier}".`,
       });
     } else {
+      //Validate password
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(400).json({ message: `Invalid credentials.` });
+        return res.status(400).json({ message: `Wrong password.` });
       }
+
+      //Generate jwt token
       const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
         //change this prolly longer
         expiresIn: "8h",
       });
-      res.status(200).json({ token });
+
+      res.status(200).json({ message: "Login successful!", token, role: user.role });
     }
   } catch (error) {
     //add more error handling here like if a user already exists in database
     console.error(error);
-    res.status(error).json({ message: "Something went wrong" });
+    res.status(error).json({ message: "Server error. Try again later?" });
   }
 };

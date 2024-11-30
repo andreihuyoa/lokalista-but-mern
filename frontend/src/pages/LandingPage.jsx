@@ -13,7 +13,7 @@ const LandingPage = () => {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="min-h-screen min-w-full items-center gap-12 px-10 py-5">
-        {/* SVG accent */}
+        {/* SVG Background Accent */}
         <div
           className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
           style={{
@@ -39,7 +39,6 @@ const LandingPage = () => {
           </div>
 
           {/* Lokalista Heading */}
-
           <h1 className="font-TanPearl text-lh1 my-16 flex justify-center text-black dark:text-slate-200">
             Lokal<span className="text-primary dark:text-primary">i</span>sta
           </h1>
