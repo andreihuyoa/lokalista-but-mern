@@ -44,7 +44,7 @@ export const login = async (req, res) => {
     });
     if (!user) {
       return res.status(404).json({
-        message: `No user found with email or username "${identifier}".`,
+        message: `No user found with email or username "${identifier || "(Does not exist.)"}".`,
       });
     } else {
       //Validate password
@@ -53,7 +53,7 @@ export const login = async (req, res) => {
         return res.status(400).json({ message: `Wrong password.` });
       }
 
-      //Generate jwt token
+      //Generate jwt token along with user id and role
       const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
         //change this prolly longer
         expiresIn: "8h",

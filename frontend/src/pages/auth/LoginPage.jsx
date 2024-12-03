@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { handleLogin } from "@/services/authService";
 
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,6 +26,8 @@ const formSchema = z.object({
 
 const LoginPage = () => {
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -37,15 +40,29 @@ const LoginPage = () => {
   const handleSubmit = async (data) => {
     try {
       setError("");
+      setIsLoading(true);
+
       const response = await handleLogin({
         identifier: data.email_or_username,
         password: data.password,
       });
 
-      //Store the token
+      //Redirect to based on role
+      switch (response.role) {
+        case "client":
+          navigate("../client/dashboard");
+          break;
+        case "freelance":
+          navigate("../freelancer/dashboard");
+          break;
+        default:
+          navigate("/");
+      }
     } catch (error) {
       setError(error.message);
-      console.error("Login failed", error);
+      console.error("Login failed:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -106,8 +123,8 @@ const LoginPage = () => {
                 </div>
                 {/* Submit */}
                 <CardFooter className="flex flex-col items-end px-0">
-                  <Button type="submit" className="w-2/4 py-0">
-                    Login
+                  <Button type="submit" disabled={isLoading} className="w-2/4 py-0">
+                    {isLoading ? "Logging in..." : "Login"}
                   </Button>
                   <Button variant="link" className="text-xs">
                     Already have an account?
