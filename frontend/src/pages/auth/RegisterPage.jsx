@@ -21,6 +21,7 @@ import {
 
 import { ArrowRight } from "lucide-react";
 import computerguy from "../../assets/images/computerguy.svg";
+import { Link } from "react-router-dom";
 
 const formSchema = z
   .object({
@@ -265,8 +266,8 @@ const RegisterPage = () => {
                   <Button type="submit" className="w-2/4 py-0">
                     Register
                   </Button>
-                  <Button variant="link" className="text-xs">
-                    Already have an account?
+                  <Button variant="link" asChild className="text-xs">
+                    <Link to="/login">Already have an account?</Link>
                   </Button>
                 </CardFooter>
               </form>

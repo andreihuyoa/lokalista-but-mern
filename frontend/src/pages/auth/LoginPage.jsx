@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { handleLogin } from "@/services/authService";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -126,8 +126,8 @@ const LoginPage = () => {
                   <Button type="submit" disabled={isLoading} className="w-2/4 py-0">
                     {isLoading ? "Logging in..." : "Login"}
                   </Button>
-                  <Button variant="link" className="text-xs">
-                    Already have an account?
+                  <Button variant="link" asChild className="text-xs">
+                    <Link to="/register">Don&apos;t have an account?</Link>
                   </Button>
                 </CardFooter>
               </form>
