@@ -18,6 +18,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
   email_or_username: z.string().min(1, "Email or username is required"),
@@ -25,6 +26,7 @@ const formSchema = z.object({
 });
 
 const LoginPage = () => {
+  const { toast } = useToast();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -47,6 +49,12 @@ const LoginPage = () => {
         password: data.password,
       });
 
+      toast({
+        title: "Success!",
+        description: "Successfully logged in.",
+        variant: "default",
+      });
+
       //Redirect to based on role
       switch (response.role) {
         case "client":
@@ -59,7 +67,11 @@ const LoginPage = () => {
           navigate("/");
       }
     } catch (error) {
-      setError(error.message);
+      toast({
+        title: "Error!",
+        description: error.message,
+        variant: "destructive",
+      });
       console.error("Login failed:", error);
     } finally {
       setIsLoading(false);
@@ -125,7 +137,14 @@ const LoginPage = () => {
                 {/* Submit */}
                 <CardFooter className="flex flex-col items-end px-0">
                   <Button type="submit" disabled={isLoading} className="w-2/4 py-0">
-                    {isLoading ? "Logging in..." : "Login"}
+                    {isLoading ? (
+                      <>
+                        <LoadingSpinner className="mr-2" />
+                        Logging in...
+                      </>
+                    ) : (
+                      "Login"
+                    )}
                   </Button>
                   <Button variant="link" asChild className="text-xs">
                     <Link to="/register">Don&apos;t have an account?</Link>

@@ -1,12 +1,14 @@
 import { ThemeProvider } from "../components/ThemeProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 export const Layout = ({ children }) => {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="min-h-screen flex items-center justify-center bg-background dark:bg-background p-4 md:p-6">
+      <div className="bg-background dark:bg-background flex min-h-screen items-center justify-center p-4 md:p-6">
         {/* <Header /> */}
-        <main className="container mx-auto flex-grow pt-5 md:pt-2 px-2 sm:px-6 lg:px-8">
+        <main className="container mx-auto flex-grow px-2 pt-5 sm:px-6 md:pt-2 lg:px-8">
           {children}
+          <Toaster />
         </main>
         {/* Footer */}
       </div>
