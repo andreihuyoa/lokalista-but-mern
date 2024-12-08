@@ -31,23 +31,13 @@ export const handleLogin = async (credentials) => {
     const errorData = await response.json();
     throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
   }
-  return await response.json();
+  const data = await response.json();
 
   //Store token and role
-  setToken(data.token);
-  setRole(data.role);
-};
+  localStorage.setItem(TOKEN_KEY, data.token);
+  localStorage.setItem(ROLE_KEY, data.role);
 
-export const setToken = (token) => {
-  localStorage.getItem(TOKEN_KEY, token);
-};
-
-export const getToken = () => {
-  return localStorage.getItem(TOKEN_KEY);
-};
-
-export const setRole = (role) => {
-  localStorage.setItem(ROLE_KEY, role);
+  return data;
 };
 
 export const getRole = () => {
@@ -55,7 +45,7 @@ export const getRole = () => {
 };
 
 export const isAuthenticated = () => {
-  return !!getToken();
+  return !!localStorage.getItem(TOKEN_KEY);
 };
 
 export const handleLogout = () => {

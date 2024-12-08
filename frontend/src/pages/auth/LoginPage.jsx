@@ -50,10 +50,10 @@ const LoginPage = () => {
       //Redirect to based on role
       switch (response.role) {
         case "client":
-          navigate("../client/dashboard");
+          navigate("/client/dashboard", { replace: true });
           break;
         case "freelance":
-          navigate("../freelancer/dashboard");
+          navigate("/freelancer/dashboard", { replace: true });
           break;
         default:
           navigate("/");
@@ -81,6 +81,7 @@ const LoginPage = () => {
           </CardHeader>
 
           <CardContent className="pb-0">
+            {error && <div className="mb-4 rounded-md bg-red-50 p-4 text-red-500">{error}</div>}
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(handleSubmit)}
