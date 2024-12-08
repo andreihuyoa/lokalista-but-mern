@@ -21,7 +21,7 @@ export const register = async (req, res) => {
     await newUser.save();
     res.status(201).json({ message: `User registered successfully with username ${username}` });
   } catch (error) {
-    //add more error handling here
+    //add more error handling here like if a user already exists in database
     console.error(error);
     res.status(500).json({ message: "Something went wrong" });
   }
@@ -59,10 +59,13 @@ export const login = async (req, res) => {
         expiresIn: "8h",
       });
 
-      res.status(200).json({ message: "Login successful!", token, role: user.role });
+      res.status(200).json({
+        message: "Login successful!",
+        token,
+        role: user.role,
+      });
     }
   } catch (error) {
-    //add more error handling here like if a user already exists in database
     console.error(error);
     res.status(error).json({ message: "Server error. Try again later?" });
   }

@@ -23,10 +23,10 @@ app.use(cors(corsOptions)); //use this for advanced setup or just use app.use(co
 app.use(express.json());
 
 //Public Routes
-app.use("/api/auth", authRoutes);
+app.use("/auth", authRoutes);
 
 //Protected Routes
-app.use("/api", protectedRoutes);
+app.use("/", protectedRoutes);
 
 //When building mern stack applicaiton, client/frontend should run on port 3000 by default pero with vite it run on 5173. Meanwhile "backend" server runs on 5000.
 

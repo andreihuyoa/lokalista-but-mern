@@ -2,11 +2,9 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000"; //gets 
 const TOKEN_KEY = "authToken";
 const ROLE_KEY = "userRole";
 
-console.log("API_URL", API_URL); // for checking
-
 //Register user here instead inline sa frontend
 export const handleRegistration = async (userData) => {
-  const response = await fetch(`${API_URL}/api/auth/register`, {
+  const response = await fetch(`${API_URL}/auth/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -21,7 +19,7 @@ export const handleRegistration = async (userData) => {
 };
 
 export const handleLogin = async (credentials) => {
-  const response = await fetch(`${API_URL}/api/auth/login`, {
+  const response = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
