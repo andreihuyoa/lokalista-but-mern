@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ModeToggle from "@/components/ModeToggle";
 
-import clairo from "../assets/images/clairocotrill.jpg"; //replace with the actual image
 import bgaccent from "../assets/images/background/Ellipse.svg";
 import computerguy from "../assets/images/computerguy.svg";
 

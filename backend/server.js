@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 
 import { connectDB } from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
+import protectedRoutes from "./routes/protectedRoutes.js";
 
 dotenv.config(); //lets u access the .env file
 
@@ -22,9 +22,11 @@ app.use(cors(corsOptions)); //use this for advanced setup or just use app.use(co
 //Middleware
 app.use(express.json());
 
-//Routes
+//Public Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
+
+//Protected Routes
+app.use("/api", protectedRoutes);
 
 //When building mern stack applicaiton, client/frontend should run on port 3000 by default pero with vite it run on 5173. Meanwhile "backend" server runs on 5000.
 
