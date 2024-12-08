@@ -3,10 +3,12 @@ import React, { useState } from "react";
 import { handleRegistration } from "@/services/authService";
 
 import { useForm } from "react-hook-form";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
@@ -16,10 +18,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 
 import { ArrowRight } from "lucide-react";
 import computerguy from "../../assets/images/computerguy.svg";
+import { Link } from "react-router-dom";
 
 const formSchema = z
   .object({
@@ -68,7 +70,7 @@ const RegisterPage = () => {
     try {
       const userData = { ...values, role };
 
-      if(!userData.username || userData.username.trim() === "") {
+      if (!userData.username || userData.username.trim() === "") {
         delete userData.username;
       }
 
@@ -98,8 +100,13 @@ const RegisterPage = () => {
           </CardHeader>
 
           <CardContent className="pb-0">
-            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-            {successMessage && <p className="text-red-500">{successMessage}</p>}
+            {/* Have a better error handling but usually for duplicates, mismatch
+            of passwords success then redirect to login
+            */}
+            <div className="text-center">
+              {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+              {successMessage && <p className="text-red-500">{successMessage}</p>}
+            </div>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(handleSubmit)}
@@ -255,9 +262,12 @@ const RegisterPage = () => {
                   </div>
                 </div>
                 {/* Submit */}
-                <CardFooter>
-                  <Button type="submit" className="w-full py-0">
+                <CardFooter className="flex flex-col items-end px-0">
+                  <Button type="submit" className="w-2/4 py-0">
                     Register
+                  </Button>
+                  <Button variant="link" asChild className="text-xs">
+                    <Link to="/login">Already have an account?</Link>
                   </Button>
                 </CardFooter>
               </form>

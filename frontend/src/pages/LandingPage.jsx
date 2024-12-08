@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ModeToggle from "@/components/ModeToggle";
 
-import clairo from "../assets/images/clairocotrill.jpg"; //replace with the actual image
 import bgaccent from "../assets/images/background/Ellipse.svg";
 import computerguy from "../assets/images/computerguy.svg";
 
@@ -13,7 +12,7 @@ const LandingPage = () => {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="min-h-screen min-w-full items-center gap-12 px-10 py-5">
-        {/* SVG accent */}
+        {/* SVG Background Accent */}
         <div
           className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
           style={{
@@ -39,7 +38,6 @@ const LandingPage = () => {
           </div>
 
           {/* Lokalista Heading */}
-
           <h1 className="font-TanPearl text-lh1 my-16 flex justify-center text-black dark:text-slate-200">
             Lokal<span className="text-primary dark:text-primary">i</span>sta
           </h1>

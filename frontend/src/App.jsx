@@ -1,5 +1,7 @@
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 
+import ProtectedRoute from "./pages/auth/ProtectedRoute.jsx";
+
 import { Layout } from "./layouts/Layout.jsx";
 import LoginPage from "./pages/auth/LoginPage.jsx";
 import RegisterPage from "./pages/auth/RegisterPage.jsx";
@@ -10,6 +12,20 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+
+        {/* Client Protected Routes */}
+        <Route
+          path="/client/"
+          element={<ProtectedRoute allowedRoles={["client"]}>{/* Layouts here */}</ProtectedRoute>}
+        />
+
+        {/* Freelance Protected Routes */}
+        <Route
+          path="/freelance"
+          element={
+            <ProtectedRoute allowedRoles={["freelance"]}>{/* Layouts here */}</ProtectedRoute>
+          }
+        />
 
         {/* With Layout */}
         <Route
