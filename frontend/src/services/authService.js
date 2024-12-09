@@ -21,6 +21,7 @@ export const handleRegistration = async (userData) => {
 export const handleLogin = async (credentials) => {
   const response = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
@@ -31,24 +32,64 @@ export const handleLogin = async (credentials) => {
     const errorData = await response.json();
     throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
   }
-  const data = await response.json();
 
-  //Store token and role
-  localStorage.setItem(TOKEN_KEY, data.token);
-  localStorage.setItem(ROLE_KEY, data.role);
-
-  return data;
+  return await response.json();
 };
 
-export const getRole = () => {
-  return localStorage.getItem(ROLE_KEY);
+export const refreshToken = async () => {
+  try {
+    const response = await fetch(`${API_URL}/auth/refresh`, {
+      method: "POST",
+      credentials: "include",
+    });
+    if (!response.ok) {
+      throw new Error("Failed to refresh token");
+    }
+    return true;
+  } catch (error) {
+    console.error("Token refresh failed:", error);
+    return false;
+  }
 };
 
-export const isAuthenticated = () => {
-  return !!localStorage.getItem(TOKEN_KEY);
+export const handleLogout = async () => {
+  await fetch(`${API_URL}/auth/logout`, {
+    method: "POST",
+    credentials: "include",
+  });
 };
 
-export const handleLogout = () => {
-  localStorage.removeItem(TOKEN_KEY);
-  localStorage.removeItem(ROLE_KEY);
-};
+import axios from "axios";
+
+const api = axios.create({
+  baseURL: API_URL,
+  withCredentials: true,
+});
+
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (
+      error.response?.status === 401 &&
+      error.response?.data?.shouldRefresh &&
+      !originalRequest._retry
+    ) {
+      originalRequest._retry = true;
+
+      try {
+        await refreshToken();
+        return api(originalRequest);
+      } catch (refreshError) {
+        //redirect to login if refresh fails
+        window.location.href = "/login";
+        return Promise.reject(refreshError);
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
+export { api };
