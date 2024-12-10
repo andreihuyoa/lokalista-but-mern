@@ -1,7 +1,7 @@
-import React from "react";
+import { withTokenRefresh } from "@/components/withTokenRefresh";
 
 const Dashboard = () => {
   return <div>Dashboard ni client</div>;
 };
 
-export default Dashboard;
+export default withTokenRefresh(Dashboard);

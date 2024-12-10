@@ -37,7 +37,7 @@ const generateTokens = (userId, role) => {
   //Refresh Token (long-lived)
   const refreshToken = jwt.sign(
     { id: userId, role },
-    process.env.JWT_ACCESS_SECRET,
+    process.env.JWT_REFRESH_SECRET,
     { expiresIn: "7d" } //7 days nalang muna default
   );
 
@@ -82,7 +82,6 @@ export const login = async (req, res) => {
 
       res.status(200).json({
         message: "Login Successful",
-        cookie,
         role: user.role,
       });
     }
@@ -100,7 +99,7 @@ export const refresh = async (req, res) => {
     }
 
     //Verify refresh token
-    const decoded = jwt.verify(refreshToken, process.env.JWT_ACCESS_SECRET);
+    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
     const user = await User.findById(decoded.id);
 
     if (!user) {
@@ -128,7 +127,7 @@ export const refresh = async (req, res) => {
     res.json({ message: "Token refreshed successfully" });
   } catch (error) {
     console.error(error);
-    res.status(error).json({ message: "Error!?" });
+    res.status(500).json({ message: "Error refreshing token" });
   }
 };
 

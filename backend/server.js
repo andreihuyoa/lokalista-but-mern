@@ -13,9 +13,13 @@ const PORT = process.env.PORT || 5000;
 
 //Cors Config
 const corsOptions = {
-  origin: ["http://localhost:5173", "https://lokalista-frontend-domain.com"], //frontend origins
+  origin: [
+    process.env.FRONTEND_URL || "http://localhost:5173",
+    "https://lokalista-frontend-domain.com",
+  ], //frontend origins
+  credentials: true, // for cookies
   methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  allowedHeaders: ["Content-Type"],
 };
 app.use(cors(corsOptions)); //use this for advanced setup or just use app.use(cors());
 

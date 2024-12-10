@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { isAuthenticated, getRole } from "@/services/authService.js";
+// import { isAuthenticated } from "@/services/authService.js";
 
 const ProtectedRoute = ({ children, allowedRoles = [] }) => {
   const location = useLocation();
@@ -13,7 +13,7 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
       case "freelance":
         return <Navigate to="/freelancer/dashboard" replace />;
       default:
-        <Navigate to="/" replace />;
+        return <Navigate to="/" replace />;
     }
   }
 
